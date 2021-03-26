@@ -10,9 +10,9 @@ class Study_Block(db.Model):
     duration_s = db.Column(db.Integer, nullable=False)
 
     #? 1 course - Many study_blocks
-    course_id = db.Column(db.String(7), db.ForeignKey('course.code'), nullable=False)
+    # course_id = db.Column(db.String(7), db.ForeignKey('course.code'), nullable=False)
     #? 1 user - Many study blocks
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
     

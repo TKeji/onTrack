@@ -8,4 +8,4 @@ class Course(db.Model):
     code = db.Column(db.String(7), primary_key=True)
     title = db.Column(db.String(80), nullable=False)
     credits = db.Column(db.Integer, nullable=False)
-    study_blocks = db.relationship('study_block', backref='course', lazy=True)
+    # study_blocks = db.relationship('study_block', backref='course', lazy=True)

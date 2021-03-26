@@ -5,22 +5,26 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object('config.Config')
 
-    from webapp.extensions import db, migrate, api, api_blueprint
+    from webapp.extensions import db, migrate, api, api_blueprint, jwt
     db.init_app(app)
     migrate.init_app(app, db)
-    api.init_app(api_blueprint)
-    app.register_blueprint(api_blueprint)
-
+    jwt.init_app(app)
 
     with app.app_context(): 
         import webapp.models
+        print('created all')
         db.create_all()
 
+    api.init_app(api_blueprint)
+    app.register_blueprint(api_blueprint)
     @app.route('/')
     def startup(): 
         return jsonify({'msg': 'Welcome to On-track'})
 
+    from flask_jwt_extended import jwt_required
+
     @app.route('/recommend')
+    @jwt_required()
     def recommend(): 
         return {'msg': 'Recommend route incoming'}
 
