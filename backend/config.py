@@ -3,3 +3,4 @@ import os
 class Config: 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get('SQLALCHEMY_TRACK_MODIFICATIONS', 'FALSE')
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
