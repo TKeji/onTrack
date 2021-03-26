@@ -1,20 +1,19 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Blueprint
 
 
 def create_app(): 
     app = Flask(__name__)
     app.config.from_object('config.Config')
 
-    # TODO: Add a config file
-
-    from webapp.extensions import db, migrate
+    from webapp.extensions import db, migrate, api, api_blueprint
     db.init_app(app)
     migrate.init_app(app, db)
-    
+    api.init_app(api_blueprint)
+    app.register_blueprint(api_blueprint)
+
 
     with app.app_context(): 
         import webapp.models
-        print("creating all")
         db.create_all()
 
     @app.route('/')
