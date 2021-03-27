@@ -1,10 +1,11 @@
 from webapp.extensions import db 
 
-
+# Associatoin table
 course_list = db.Table('course_list',
     db.Column('course_id', db.String(7), db.ForeignKey('course.code'), primary_key=True),
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
 )
+
 
 class Course(db.Model): 
     __tablename__ = 'course'
@@ -18,5 +19,20 @@ class Course(db.Model):
         backref=db.backref('courses', lazy=True))
     # study_blocks = db.relationship('study_block', backref='course', lazy=True)
 
+    def __repr__(self): 
+        return f'Course<code={self.code}, title={self.title}, credits={self.credits}>'
+
+    def save(self): 
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_courses(cls): 
+        res = cls.query.all()
+        return res
+    
+    @classmethod
+    def find_by_id(cls): 
+        pass
 
 

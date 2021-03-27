@@ -9,3 +9,12 @@ class UserSchema(ma.Schema):
 
 userSchema = UserSchema()
 usersSchema = UserSchema(many=True)
+
+
+class CourseSchema(ma.Schema): 
+    class Meta: 
+        fields = ['code', 'title', 'credits']
+        ordered = True
+
+courseSchema = CourseSchema()
+coursesSchema = CourseSchema(many=True)
