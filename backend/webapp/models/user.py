@@ -1,5 +1,6 @@
 from webapp.extensions import db 
 from webapp.models.course import Course
+from webapp.models.session import Session
 # from webapp.models.study_block import Study_Block
 
 class User(db.Model): 
@@ -18,8 +19,7 @@ class User(db.Model):
     # course_of_study_id = db.Column(db.Integer, db.ForeignKey('Course_Of_Study.id'))
     # course_of_study = db.relationship('Course_Of_Study', back_populates='user')
 
-    # user = db.relationship('study_block', backref='user', lazy=True)
-    study_blocks = db.relationship('Study_Block', back_populates='user')
+    sessions = db.relationship('Session', back_populates='user', order_by='Session.start_time.desc()')
 
     def __repr__(self): 
         return f"User<id={self.id}, email={self.email}, firstname={self.firstname}, lastname={self.lastname}>"
@@ -47,6 +47,11 @@ class User(db.Model):
         course = Course.find_by_id(code)
         self.courses.remove(course)
         self.save()
+
+    def get_sessions(self, course_code=None): 
+        if not course_code: 
+            return self.sessions
+        return Session.find_course_sessions(self.id, course_code)
 
     @classmethod
     def find_by_email(cls, email): 

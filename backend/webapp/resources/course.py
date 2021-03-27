@@ -19,6 +19,7 @@ class CoursesResource(Resource):
     def post(self): 
         try: 
             req_json = request.get_json()
+            print(req_json)
             course = courseSchema.dump(req_json)
             course = Course(**req_json)
             course.save() 
