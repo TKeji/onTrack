@@ -1,1 +1,1 @@
-from webapp.resources.user import UserLogin, UserRegister
+from webapp.resources.user import UserLogin, UserRegister, UsersResource, UserResource

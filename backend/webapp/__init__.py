@@ -5,10 +5,11 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object('config.Config')
 
-    from webapp.extensions import db, migrate, api, api_blueprint, jwt
+    from webapp.extensions import db, migrate, api, api_blueprint, jwt, ma
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
+    ma.init_app(app)
 
     with app.app_context(): 
         import webapp.models

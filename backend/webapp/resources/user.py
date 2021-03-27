@@ -3,9 +3,57 @@ from flask_restx import Resource
 from flask_jwt_extended import create_access_token, create_refresh_token
 
 from webapp.models.user import User
+from webapp.schemas import userSchema, usersSchema
 
 def validate_body(fields, json_body): 
     return all([field in json_body for field in fields])
+
+
+class UserResource(Resource): 
+    def get(self, user_id): 
+        # Get suer from db 
+        print(user_id)
+        user = User.find_by_id(user_id)
+        if not user: 
+            return {'error': f'User with id {user_id} not found '}, 400
+        return {'data': userSchema.dump(user)}
+        
+    
+    def put(self, user_id): 
+        # Editable fields 
+        req_body = request.get_json(silent=True)
+        try:
+            user_changes = userSchema.load(req_body)
+        except Exception as e:
+            print(e) 
+            return {'error': 'invalid fields to change'}, 400
+        # Get the user 
+        user = User.find_by_id(user_id)
+        if not user: 
+            return {'error': f'User with id {user_id} does not exist'}
+        for field, value in user_changes.items(): 
+            setattr(user, field, value)
+        user.save() 
+        return {'msg': 'user details updated'} 
+
+    def delete(self, user_id): 
+        try: 
+            User.remove_by_id(user_id)
+        except Exception as  e: 
+            print(e)
+            return {'msg': 'unable to delete user'}
+        
+        return {'msg': 'user deleted'}, 204
+
+class UsersResource(Resource): 
+    # TODO: Deal with Query parameters
+    def get(self): 
+        # get all users 
+        users = User.get_users()
+        print(users)
+        return {f'data': 
+            usersSchema.dump(users)
+        }
 
 
 class UserLogin(Resource): 
@@ -28,11 +76,11 @@ class UserLogin(Resource):
 
         return {'data': {
             'msg': 'successfully signed in', 
+            'user_id': auth_user.id,
             'access_token': create_access_token(identity=auth_user.id), 
             'refresh_token': create_refresh_token(identity=auth_user.id), 
         }}
 
-        return {'error': f'Route {request.full_path} not up yet'}, 500
 
 
 class UserRegister(Resource): 
@@ -49,4 +97,4 @@ class UserRegister(Resource):
         new_user = User(**json_payload)
         new_user.save()
 
-        return {'data': {'msg': 'user was successfully created', 'user_id': f'new_user.id'}}
+        return {'data': {'msg': 'user was successfully created', 'user_id': f'{new_user.id}'}}

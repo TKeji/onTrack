@@ -35,12 +35,31 @@ class User(db.Model):
         return self.password == other_password
 
     @classmethod
-    def find_by_email(self, email): 
+    def find_by_email(cls, email): 
         if not email: 
             return None 
-        res = User.query.filter(User.email == email).first()
+        res = User.query.filter(cls.email == email).first()
         return res 
 
+    @classmethod
+    def find_by_id(cls, id): 
+        if not id: 
+            return None 
+        try:
+            res = User.query.filter(cls.id == id).first()
+        except: 
+            return None
+        return res
+
+    @classmethod
+    def get_users(cls, limit=5): 
+        res = cls.query.limit(limit).all()
+        return res 
+    
+    @classmethod
+    def remove_by_id(cls, user_id): 
+        cls.query.filter(cls.id==user_id).delete()
+        db.session.commit()
 
 
 
