@@ -1,5 +1,7 @@
-from webapp.extensions import ma
 import marshmallow
+
+from webapp.extensions import ma
+from webapp.models.article import Article
 
 class UserSchema(ma.Schema): 
     password = marshmallow.fields.String(load_only=True)
@@ -22,9 +24,20 @@ class SessionSchema(ma.Schema):
 
     # TODO: GET the user information & course information onto the session schema - Currently not working
     # ! Can't make the user 
-    user = marshmallow.fields.Nested('UserSchema')
+    # user = marshmallow.fields.Nested('UserSchema')
         # user = fields.Nested(UserSchema)
         # course = ma.Nested(CourseSchema)
+
+
+class ArticleSchema(ma.SQLAlchemySchema): 
+    class Meta: 
+        model = Article
+    id = ma.auto_field(dump_only=True)
+    title = ma.auto_field()
+    author = ma.auto_field()
+    full_text = ma.auto_field()
+    link = ma.auto_field()
+
 
 
 userSchema = UserSchema()
@@ -35,3 +48,6 @@ coursesSchema = CourseSchema(many=True)
 
 sessionSchema = SessionSchema()
 sessionsSchema = SessionSchema(many=True)
+
+articleSchema = ArticleSchema()
+articlesSchema = ArticleSchema(many=True)

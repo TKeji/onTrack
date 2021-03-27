@@ -24,6 +24,22 @@ class Article(db.Model):
     
     # many to many 
 
+    def __repr__(self): 
+        return f'Article<id={self.id}, title={self.title}, author={self.author}>'
+    
+    def save(self): 
+        db.session.add(self)
+        db.session.commit()
+    
+    @classmethod
+    def find_by_id(cls, article_id): 
+        return cls.query.filter(cls.id == article_id).first()
+
+    @classmethod
+    def get_articles(cls): 
+        return cls.query.all()
+
+
 
 class ArticleRatings(db.Model): 
     __tablename__ = 'article_ratings'

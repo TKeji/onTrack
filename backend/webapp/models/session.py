@@ -1,5 +1,6 @@
 from sqlalchemy import func, UniqueConstraint
 
+from webapp.models.article import Article
 from webapp.extensions import db 
 
 class Session(db.Model): 
@@ -25,6 +26,19 @@ class Session(db.Model):
     def save(self): 
         db.session.add(self)
         db.session.commit()
+    
+    def add_article(self, article): 
+        self.articles.append(article)
+        self.save()
+
+    def remove_article(self, article_id): 
+        article = Article.find_by_id(article_id)
+        self.articles.remove(article)
+        self.save()
+    
+    @classmethod
+    def find_by_id(cls, session_id): 
+        return cls.query.filter(cls.id == session_id).first()
 
     @classmethod
     def find_course_sessions(cls, user_id, course_code): 

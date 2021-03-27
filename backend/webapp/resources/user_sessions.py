@@ -3,7 +3,8 @@ from flask_restx import Resource
 
 from webapp.models.user import User
 from webapp.models.session import Session
-from webapp.schemas import sessionSchema, sessionsSchema
+from webapp.models.article import Article
+from webapp.schemas import sessionSchema, sessionsSchema, articlesSchema
 
 class UserSessionResource(Resource): 
     def get(self, user_id): 
@@ -46,3 +47,39 @@ class UserSessionResource(Resource):
             print(e)
             return {'error': 'Unable to add session'}, 500
         return {'msg': 'session successfully added'}, 201
+
+
+class SessionArticleResource(Resource): 
+    def get(self, session_id): 
+        try: 
+            session = Session.find_by_id(session_id)
+            sess_articles = session.articles 
+            print(sess_articles)
+            sess_articles_json = articlesSchema.dump(sess_articles)
+
+        except Exception as e: 
+            return {'msg': f'unable to fetch articles for session {session_id}'}, 500
+        return {'data': sess_articles_json}
+
+    def post(self, session_id): 
+        try: 
+            req_json = request.get_json() 
+            session = Session.find_by_id(session_id)
+            article = Article.find_by_id(req_json['article_id'])
+            session.add_article(article)
+        except Exception as e: 
+            print(e)
+            return {'msg': f'unable to add article to session {session_id}'}, 500
+        return {'msg': 'Successfully added article'}
+
+        return {'msg': session_id}
+
+    def delete(self, session_id): 
+        try: 
+            req_json = request.get_json() 
+            session = Session.find_by_id(session_id)
+            session.remove_article(req_json['article_id'])
+        except Exception as e: 
+            print(e)
+            return {'msg': f'unable to remove article from session {session_id}'}, 500
+        return {}, 204
