@@ -8,11 +8,10 @@ class CoursesResource(Resource):
     def get(self): 
         try: 
             courses = Course.get_courses()
-            print(courses)
             courses_json = coursesSchema.dump(courses)
         except Exception as e: 
             print(e)
-            return {'error': 'could not get all courses'}
+            return {'error': 'could not get all courses'}, 500
         return {'data': 
             courses_json
         }
@@ -24,6 +23,6 @@ class CoursesResource(Resource):
             course = Course(**req_json)
             course.save() 
         except Exception as e: 
-            return {'error': 'could not create course'}
+            return {'error': 'could not create course'}, 500
 
         return {'msg': 'course successfully added'}

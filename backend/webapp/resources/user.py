@@ -30,7 +30,7 @@ class UserResource(Resource):
         # Get the user 
         user = User.find_by_id(user_id)
         if not user: 
-            return {'error': f'User with id {user_id} does not exist'}
+            return {'error': f'User with id {user_id} does not exist'}, 400
         for field, value in user_changes.items(): 
             setattr(user, field, value)
         user.save() 
@@ -62,7 +62,7 @@ class UserLogin(Resource):
         fields = 'email', 'password'
         json_payload = request.get_json(silent=True)
         if not validate_body(fields, json_payload): 
-            return {'error': f'Must specify: {fields}'}
+            return {'error': f'Must specify: {fields}'}, 400
 
         # Get user 
         auth_user = User.find_by_email(json_payload['email']) 
@@ -70,7 +70,7 @@ class UserLogin(Resource):
             return {'error': 'User does not exist'}
         # Verify password 
         if not auth_user.verify_password(json_payload['password']): 
-            return {'error': 'Incorrect password'}
+            return {'error': 'Incorrect password'}, 400
         
         # Create token for user
 
@@ -89,10 +89,10 @@ class UserRegister(Resource):
         fields = 'email', 'password', 'firstname', 'lastname'
         json_payload = request.get_json(silent=True)
         if not validate_body(fields, json_payload): 
-            return {'error': f'Must specify: {fields}'}
+            return {'error': f'Must specify: {fields}'}, 400
         # Check if user with email already exists
         if User.find_by_email(json_payload['email']) is not None: 
-            return {'error': f'{json_payload["email"]} already exists'}
+            return {'error': f'{json_payload["email"]} already exists'}, 400
         # Create user & save 
         new_user = User(**json_payload)
         new_user.save()
