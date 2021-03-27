@@ -1,5 +1,6 @@
 from webapp.extensions import db 
 from webapp.models.course import Course
+# from webapp.models.study_block import Study_Block
 
 class User(db.Model): 
     __tablename__ = 'user'
@@ -18,7 +19,7 @@ class User(db.Model):
     # course_of_study = db.relationship('Course_Of_Study', back_populates='user')
 
     # user = db.relationship('study_block', backref='user', lazy=True)
-    # TODO: Add relatioonship for course (course-form/ registered-courses)
+    study_blocks = db.relationship('Study_Block', back_populates='user')
 
     def __repr__(self): 
         return f"User<id={self.id}, email={self.email}, firstname={self.firstname}, lastname={self.lastname}>"
