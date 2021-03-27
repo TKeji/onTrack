@@ -14,10 +14,12 @@ jwt = JWTManager()
 ma = Marshmallow()
 
 # API endpoints 
-from webapp.resources import UserLogin, UserRegister, UserResource, UsersResource, CoursesResource
+from webapp.resources import UserLogin, UserRegister, UserResource, UsersResource, CoursesResource, UserCoursesResource, UserCourseResource
 api.add_resource(UserLogin, '/auth/login')
 api.add_resource(UserRegister, '/auth/register')
+api.add_resource(CoursesResource, '/courses')
 api.add_resource(UsersResource, '/users')
 api.add_resource(UserResource, '/users/<string:user_id>')
-api.add_resource(CoursesResource, '/courses')
+api.add_resource(UserCoursesResource, '/users/<string:user_id>/courses')
+api.add_resource(UserCourseResource, '/users/<string:user_id>/courses/<string:course_code>')
 api_blueprint = Blueprint('api', __name__, url_prefix='/api')

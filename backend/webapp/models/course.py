@@ -32,7 +32,8 @@ class Course(db.Model):
         return res
     
     @classmethod
-    def find_by_id(cls): 
-        pass
+    def find_by_id(cls, code): 
+        course = cls.query.filter(cls.code == code).first()
+        return course
 
 

@@ -1,5 +1,5 @@
 from webapp.extensions import db 
-
+from webapp.models.course import Course
 
 class User(db.Model): 
     __tablename__ = 'user'
@@ -33,6 +33,19 @@ class User(db.Model):
     def verify_password(self, other_password): 
         # TODO: Hash the passwords
         return self.password == other_password
+
+    def get_courses(self): 
+        return self.courses
+    
+    def add_course(self, code): 
+        course = Course.find_by_id(code)
+        self.courses.append(course)
+        self.save()
+
+    def remove_course(self, code): 
+        course = Course.find_by_id(code)
+        self.courses.remove(course)
+        self.save()
 
     @classmethod
     def find_by_email(cls, email): 
