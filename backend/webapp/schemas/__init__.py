@@ -2,6 +2,7 @@ import marshmallow
 
 from webapp.extensions import ma
 from webapp.models.article import Article
+from webapp.models.ratings import ArticleRatings
 
 class UserSchema(ma.Schema): 
     password = marshmallow.fields.String(load_only=True)
@@ -39,6 +40,13 @@ class ArticleSchema(ma.SQLAlchemySchema):
     link = ma.auto_field()
 
 
+class ArticleRatingSchema(ma.SQLAlchemySchema): 
+    class Meta: 
+        model = ArticleRatings
+    user_id = ma.auto_field()
+    article_id = ma.auto_field()
+    rating = ma.auto_field()
+   
 
 userSchema = UserSchema()
 usersSchema = UserSchema(many=True)
@@ -51,3 +59,6 @@ sessionsSchema = SessionSchema(many=True)
 
 articleSchema = ArticleSchema()
 articlesSchema = ArticleSchema(many=True)
+
+articleRatingSchema = ArticleRatingSchema()
+articleRatingsSchema = ArticleRatingSchema(many=True)

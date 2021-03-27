@@ -1,7 +1,7 @@
 from webapp.extensions import db 
 from webapp.models.course import Course
 from webapp.models.session import Session
-# from webapp.models.study_block import Study_Block
+from webapp.models.ratings import ArticleRatings
 
 class User(db.Model): 
     __tablename__ = 'user'
@@ -20,6 +20,9 @@ class User(db.Model):
     # course_of_study = db.relationship('Course_Of_Study', back_populates='user')
 
     sessions = db.relationship('Session', back_populates='user', order_by='Session.start_time.desc()')
+
+    article_ratings = db.relationship('ArticleRatings', back_populates='user')
+
 
     def __repr__(self): 
         return f"User<id={self.id}, email={self.email}, firstname={self.firstname}, lastname={self.lastname}>"
@@ -52,6 +55,21 @@ class User(db.Model):
         if not course_code: 
             return self.sessions
         return Session.find_course_sessions(self.id, course_code)
+    
+    def get_articles(self): 
+        return self.article_ratings
+    
+    def add_rating(self, article_id, rating): 
+        article_rating = ArticleRatings(user_id=self.id, article_id= article_id, rating = rating)
+        self.article_ratings.append(article_rating)
+        self.save()
+    
+    def remove_rating(self, article_id): 
+        article_rating = ArticleRatings.find_by_id(self.id, article_id)
+        print(article_rating)
+        article_rating.remove()
+        # self.article_ratings.remove(article_rating)
+        # self.save()
 
     @classmethod
     def find_by_email(cls, email): 

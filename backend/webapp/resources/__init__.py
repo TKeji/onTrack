@@ -3,3 +3,4 @@ from webapp.resources.user_course  import  UserCoursesResource, UserCourseResour
 from webapp.resources.user import UserLogin, UserRegister, UsersResource, UserResource
 from webapp.resources.user_sessions import UserSessionResource, SessionArticleResource
 from webapp.resources.article import ArticlesResource
+from webapp.resources.user_ratings import UserRatingsResource

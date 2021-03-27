@@ -38,16 +38,3 @@ class Article(db.Model):
     @classmethod
     def get_articles(cls): 
         return cls.query.all()
-
-
-
-class ArticleRatings(db.Model): 
-    __tablename__ = 'article_ratings'
-
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    article_id = db.Column(db.Integer, db.ForeignKey('article.id'), primary_key=True)
-    rating = db.Column(db.Integer, nullable=False)
-
-    # __table_args__ = (
-    #     db.PrimaryKeyConstraint('user_id', 'article_id'),
-    # )

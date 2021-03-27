@@ -19,7 +19,7 @@ from webapp.resources import (UserLogin, UserRegister,
                                 CoursesResource, UserCoursesResource, UserCourseResource,
                                 UserSessionResource, 
                                 ArticlesResource, 
-                                SessionArticleResource)
+                                SessionArticleResource, UserRatingsResource)
 api.add_resource(UserLogin, '/auth/login')
 api.add_resource(UserRegister, '/auth/register')
 api.add_resource(CoursesResource, '/courses')
@@ -30,4 +30,5 @@ api.add_resource(UserCourseResource, '/users/<string:user_id>/courses/<string:co
 api.add_resource(UserSessionResource, '/users/<string:user_id>/sessions')
 api.add_resource(ArticlesResource, '/articles')
 api.add_resource(SessionArticleResource, '/session/<string:session_id>/articles')
+api.add_resource(UserRatingsResource, '/users/<int:user_id>/articles')
 api_blueprint = Blueprint('api', __name__, url_prefix='/api')
