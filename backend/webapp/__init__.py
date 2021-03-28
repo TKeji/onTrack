@@ -4,7 +4,8 @@ from flask import Flask, jsonify, Blueprint
 def create_app(): 
     app = Flask(__name__)
     app.config.from_object('config.Config')
-    if app['ENV'] != 'production': 
+    if app.config.get('ENV') != 'development': 
+        print('In producttion')
         app.config.from_object('config.ProdConfig')
 
     from webapp.extensions import db, migrate, api, api_blueprint, jwt, ma
