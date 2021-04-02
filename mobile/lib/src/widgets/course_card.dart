@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/session_screen.dart' show SessionArguments;
 
 class CourseCard extends StatelessWidget {
   final coursetitle, coursedescription;
@@ -50,10 +51,12 @@ class CourseCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.timer),
-                            //TODO: Implement start session screen
-                            onPressed: () => print("Start study session"),
-                          ),
+                              icon: Icon(Icons.timer),
+                              //TODO: Implement start session screen
+                              onPressed: () => Navigator.pushNamed(
+                                  context, '/session',
+                                  arguments: SessionArguments(this.coursetitle,
+                                      this.coursedescription))),
                           IconButton(
                             icon: Icon(Icons.delete),
                             // TODO: Wire up remove course from user call

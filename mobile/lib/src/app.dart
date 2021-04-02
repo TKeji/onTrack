@@ -3,6 +3,8 @@ import 'package:mobile/src/screens/profile.dart';
 import './screens/sign_up.dart';
 import './screens/sign_in.dart';
 import './screens/my_courses.dart';
+import './screens/session_screen.dart';
+import './screens/my_articles.dart';
 
 var mainbackgroundcolor = 0xffA5A1A1;
 
@@ -19,6 +21,8 @@ class App extends StatelessWidget {
         '/sign-in': (context) => SignIn(),
         '/profile': (context) => Profile(),
         '/my-courses': (context) => MyCourses(),
+        '/session': (context) => Session(),
+        '/my-articles': (context) => MyArticles(),
       },
     );
   }
