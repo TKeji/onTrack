@@ -5,6 +5,7 @@ import './screens/sign_in.dart';
 import './screens/my_courses.dart';
 import './screens/session_screen.dart';
 import './screens/my_articles.dart';
+import './screens/recommendations.dart';
 
 var mainbackgroundcolor = 0xffA5A1A1;
 
@@ -23,6 +24,7 @@ class App extends StatelessWidget {
         '/my-courses': (context) => MyCourses(),
         '/session': (context) => Session(),
         '/my-articles': (context) => MyArticles(),
+        '/recommendations': (context) => Recommendations(),
       },
     );
   }

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import '../widgets/article_card.dart';
+import '../widgets/recommendation_card.dart';
 
-class MyArticles extends StatefulWidget {
-  MyArticles({Key key}) : super(key: key);
+class Recommendations extends StatefulWidget {
+  Recommendations({Key key}) : super(key: key);
 
   @override
-  _MyArticlesState createState() => _MyArticlesState();
+  _RecommendationsState createState() => _RecommendationsState();
 }
 
-class _MyArticlesState extends State<MyArticles> {
+class _RecommendationsState extends State<Recommendations> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("My Articles"),
+          title: Text("Recommendations"),
           actions: [
             IconButton(
               icon: Icon(
@@ -40,29 +40,16 @@ class _MyArticlesState extends State<MyArticles> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: 15.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ConstrainedBox(
-                      constraints:
-                          BoxConstraints.tightFor(width: 200.0, height: 55),
-                      child: ElevatedButton(
-                          onPressed: () =>
-                              Navigator.pushNamed(context, '/recommendations'),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                'Articles for you',
-                                style: TextStyle(fontSize: 16.0),
-                              ),
-                              Icon(Icons.chevron_right, size: 40.0),
-                            ],
-                          )),
-                    ),
-                    SizedBox(width: 5.0),
-                  ],
+                Text(
+                  "Articles For You",
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 1.5,
+                    wordSpacing: 5.0,
+                  ),
                 ),
+                SizedBox(width: 5.0),
                 SizedBox(height: 15.0),
                 //! Card for Articles
                 buildArticleList(),
@@ -86,12 +73,14 @@ class _MyArticlesState extends State<MyArticles> {
 Widget listItem(BuildContext context, int index) {
   return Container(
     // TODO: Change this to article card
-    child: ArticleCard(articles[index]['title']),
+    child: RecommendationCard(articles[index]['title'], index % 2 == 1),
   );
 }
 
 List<Map<String, String>> articles = [
-  {'title': 'Hands-on Graph Neural Networks with PyTorch & PyTorch Geometric'},
+  {
+    'title': 'Hands-on Graph Neural Networks with PyTorch & PyTorch Geometric',
+  },
   {'title': 'How to Use ggplot2 in Python'},
   {'title': 'Databricks: How to Save Files in CSV on Your Local Computer'},
 ];
