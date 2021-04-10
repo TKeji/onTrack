@@ -3,22 +3,24 @@ import './models/user.dart';
 import 'package:http/http.dart' show get, Response, post;
 
 // Tunneled endpoints
-final String host = 'https://protected-journey-97359.herokuapp.com';
+// final String host = 'https://protected-journey-97359.herokuapp.com';
+final String host = '10.0.2.2:5000';
 var endpoints = {'register': '/api/auth/register'};
 
 // registerUser(firstname, lastname, password, email) async{
 registerUser(NewUser user) async {
-  print(user);
-  var url = Uri.parse(endpoints['register']);
-  // Response response = await get(Uri.parse('https://jsonplaceholder.typicode.com/todos/${2+1}'));
-  print('endpoints');
-  print(url);
-  print('posting');
+  print('Sending Post Request for New user');
+  // Encode User tinto json
   String jsonUser = convert.jsonEncode(user);
-  print(jsonUser);
-  print(host + endpoints['register']);
+
+  print(host);
+  print(endpoints['register']);
+  Uri url = Uri.http(host, endpoints['register']);
+  print('URL: ' + url.toString());
+
   Response res = await post(
-    Uri.parse(host + endpoints['register']),
+    // Uri.parse(host + endpoints['register']),
+    Uri.http(host, endpoints['register']),
     headers: {'Content-Type': 'application/json'},
     body: convert.jsonEncode(user),
   );
