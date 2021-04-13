@@ -89,7 +89,7 @@ class User(db.Model):
         return res
 
     @classmethod
-    def get_users(cls, limit=5): 
+    def get_users(cls, limit=15): 
         res = cls.query.limit(limit).all()
         return res 
     
