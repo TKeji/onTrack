@@ -91,7 +91,11 @@ Widget listItem(BuildContext context, int index) {
 }
 
 List<Map<String, String>> articles = [
-  {'title': 'Hands-on Graph Neural Networks with PyTorch & PyTorch Geometric'},
-  {'title': 'How to Use ggplot2 in Python'},
-  {'title': 'Databricks: How to Save Files in CSV on Your Local Computer'},
+  {'title': 'Playing Connect 4 with Deep Q-Learning'},
+  {'title': 'Teach your AI how to walk | Solving BipedalWalker | OpenAIGym'},
+  {'title': 'An introduction to Deep Q-Learning: let’s play Doom'},
+  {
+    'title':
+        'Reinforcement Learning Demystified: Markov Decision Processes (Part 1)'
+  },
 ];

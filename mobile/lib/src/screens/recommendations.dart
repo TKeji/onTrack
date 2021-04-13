@@ -73,14 +73,22 @@ class _RecommendationsState extends State<Recommendations> {
 Widget listItem(BuildContext context, int index) {
   return Container(
     // TODO: Change this to article card
-    child: RecommendationCard(articles[index]['title'], index % 2 == 1),
+    child: RecommendationCard(articles[index]['title'], false),
   );
 }
 
 List<Map<String, String>> articles = [
   {
-    'title': 'Hands-on Graph Neural Networks with PyTorch & PyTorch Geometric',
+    'title': 'Rational Agents for Artificial Intelligence – Hacker Noon',
   },
-  {'title': 'How to Use ggplot2 in Python'},
-  {'title': 'Databricks: How to Save Files in CSV on Your Local Computer'},
+  {
+    'title':
+        'MIT 6.S094: Deep Learning for Self-Driving Cars 2018 Lecture 3 Notes: Deep Reinforcement Learning'
+  },
+  {'title': 'Reinforcement Learning – NECTEC – Medium'},
+  {
+    'title':
+        'Machine Learning for Humans, Part 4: Neural Networks & Deep Learning'
+  },
+  {'title': 'Nathan.ai newsletter Issue #21 — Part 2/2 – Hacker Noon'},
 ];

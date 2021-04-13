@@ -18,13 +18,13 @@ registerUser(NewUser user) async {
   Uri url = Uri.http(host, endpoints['register']);
   print('URL: ' + url.toString());
 
-  Response res = await post(
-    // Uri.parse(host + endpoints['register']),
-    Uri.http(host, endpoints['register']),
-    headers: {'Content-Type': 'application/json'},
-    body: convert.jsonEncode(user),
-  );
-  // print(json_user);
-  print(res.statusCode);
-  print(res.body);
+  // Response res = await post(
+  //   // Uri.parse(host + endpoints['register']),
+  //   Uri.http(host, endpoints['register']),
+  //   headers: {'Content-Type': 'application/json'},
+  //   body: convert.jsonEncode(user),
+  // );
+  // // print(json_user);
+  // print(res.statusCode);
+  // print(res.body);
 }

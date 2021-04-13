@@ -89,9 +89,18 @@ Widget listItem(BuildContext context, int index) {
 }
 
 List<Map<String, String>> courses = [
-  {'code': 'INSY404', 'title': "Introduction to Object Oriented Design"},
+  {'code': 'INSY402', 'title': "Internet Technologies"},
+  {'code': 'COSC423', 'title': "Artificial Intelligence"},
+  {'code': 'COSC417', 'title': "Database Design and Management"},
   {'code': 'COSC430', 'title': "Hands-on Java Training"},
+];
+
+List<Map<String, String>> coursesList = [
+  {'code': 'INSY402', 'title': "Internet Technologies"},
+  {'code': 'COSC423', 'title': "Artificial Intelligence"},
+  {'code': 'COSC417', 'title': "Database Design and Management"},
+  {'code': 'COSC430', 'title': "Hands-on Java Training"},
+  {'code': 'INSY404', 'title': "Introduction to Object Oriented Design"},
   {'code': 'COSC418', 'title': "Introduction to Analog Computing"},
-  {'code': 'COSC408', 'title': "Modeling and Simulations"},
-  {'code': 'INSY402', 'title': "Internet Technologies"}
+  {'code': 'COSC408', 'title': "Modelling and Simulations"},
 ];
