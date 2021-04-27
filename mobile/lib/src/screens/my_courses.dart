@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/src/global_data.dart';
 import '../widgets/course_card.dart';
 import '../widgets/course_dropdown.dart';
 
@@ -28,6 +29,7 @@ class _MyCoursesState extends State<MyCourses> {
             IconButton(
                 icon: Icon(Icons.logout),
                 onPressed: () {
+                  clearSessionData();
                   // TODO: Logout the user
                   Navigator.popAndPushNamed(context, '/sign-in');
                 }),

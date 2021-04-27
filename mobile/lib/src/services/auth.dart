@@ -21,15 +21,19 @@ Future<bool> registerUser(User user) async {
     headers: headers,
     body: jsonEncode(user.toJson()),
   );
+  final parsedBody = jsonDecode(res.body);
   if (res.statusCode == 200) {
-    final parsedBody = jsonDecode(res.body);
     clearSessionData();
-    globalSessionData.userId = parsedBody['data']['user_id'];
+    globalSessionData.userId = int.parse(parsedBody['data']['user_id']);
     globalSessionData.accessToken = parsedBody['data']['access_token'];
     globalSessionData.accessToken = parsedBody['data']['refresh_token'];
-
     return true;
+  } else if (res.statusCode == 400) {
+    print(parsedBody['error']);
+  } else if (res.statusCode == 401) {
+    print(parsedBody['error']);
   }
+  print(res.statusCode);
   return false;
 }
 
@@ -44,16 +48,16 @@ Future<bool> loginUser(User user) async {
     headers: headers,
     body: jsonEncode(user.toLoginJson()),
   );
+  final parsedBody = jsonDecode(res.body);
   if (res.statusCode == 200) {
-    final parsedBody = jsonDecode(res.body);
     clearSessionData();
-    print(parsedBody['data']['user_id']);
-    print(globalSessionData);
     globalSessionData.userId = parsedBody['data']['user_id'];
     globalSessionData.accessToken = parsedBody['data']['access_token'];
     globalSessionData.accessToken = parsedBody['data']['refresh_token'];
 
     return true;
+  } else if (res.statusCode == 401) {
+    print(parsedBody['error']);
   }
   print(res.statusCode);
   return false;
