@@ -14,7 +14,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignUp(),
+      home: SignIn(),
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/sign-up': (context) => SignUp(),

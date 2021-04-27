@@ -1,6 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../endpoints.dart';
+import '../services/auth.dart' show registerUser;
 import '../models/user.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -40,38 +39,18 @@ class _SignUpFormState extends State<SignUpForm> {
               isPassword: true),
           SizedBox(height: 18.0),
 
-          // //! Button Here
-          // Row(
-          //   children: [
-          //     Expanded(
-          //       child: ElevatedButton(
-          //           onPressed: (){
-          //             print('sign up button was pressed');
-          //             print(_email);
-          //             _formKey.currentState.save();
-          //             NewUser user = NewUser(_firstname, _lastname, _email, _password);
-          //             registerUser(user);
-          //           },
-          //           child: Text('Sign Up'),
-          //         ),
-          //     ),
-
-          //   ],
-          // ),
           ConstrainedBox(
             constraints:
                 BoxConstraints.tightFor(width: double.maxFinite, height: 50),
             child: ElevatedButton(
-              onPressed: () {
-                print('sign up button was pressed');
-                print(_email);
+              onPressed: () async {
+                // Save the states of each input
                 _formKey.currentState.save();
-                NewUser user =
-                    NewUser(_firstname, _lastname, _email, _password);
-                registerUser(user);
-
-                // TODO: Make sure user is created
-                Navigator.pushReplacementNamed(context, '/my-courses');
+                User user = User(_firstname, _lastname, _email, _password);
+                if (await registerUser(user)) {
+                  return Navigator.pushReplacementNamed(context, '/my-courses');
+                }
+                print('Register User Failded');
               },
               child: Text('Sign Up'),
             ),
@@ -79,13 +58,10 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: 40.0),
 
           Text('Already have an account?'),
-          SizedBox(
-            height: 10.0,
-          ),
+          SizedBox(height: 8.0),
 
           GestureDetector(
             onTap: () {
-              print('Go to Sign in');
               Navigator.popAndPushNamed(context, '/sign-in');
             },
             child: Text(
@@ -99,7 +75,8 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
-  generateFormField(String hint, saveFunc, {isPassword: false, isEmail: true}) {
+  Widget generateFormField(String hint, saveFunc,
+      {isPassword: false, isEmail: true}) {
     return TextFormField(
       //* To get the Borders around field
       decoration: InputDecoration(
@@ -110,7 +87,6 @@ class _SignUpFormState extends State<SignUpForm> {
             borderRadius: BorderRadius.circular(8.0),
             borderSide: BorderSide(color: Colors.black38)),
         hintText: hint,
-        // contentPadding: EdgeInsets.only(top:0.5),
       ),
       obscureText: isPassword ? true : false,
       keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,

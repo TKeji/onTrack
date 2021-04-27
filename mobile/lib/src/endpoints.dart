@@ -8,7 +8,7 @@ final String host = '10.0.2.2:5000';
 var endpoints = {'register': '/api/auth/register'};
 
 // registerUser(firstname, lastname, password, email) async{
-registerUser(NewUser user) async {
+registerUser(User user) async {
   print('Sending Post Request for New user');
   // Encode User tinto json
   String jsonUser = convert.jsonEncode(user);

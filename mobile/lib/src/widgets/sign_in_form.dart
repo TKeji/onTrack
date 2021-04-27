@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../endpoints.dart';
+import 'package:mobile/src/services/auth.dart';
 import '../models/user.dart';
-import '../screens/sign_up.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -11,11 +10,8 @@ class SignInForm extends StatefulWidget {
 class _SignInFormState extends State<SignInForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _firstname = '';
-  String _lastname = '';
   String _email = '';
   String _password = '';
-  String _confirmPassword = '';
 
   @override
   Widget build(BuildContext context) {
@@ -36,29 +32,27 @@ class _SignInFormState extends State<SignInForm> {
             constraints:
                 BoxConstraints.tightFor(width: double.maxFinite, height: 50),
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 print('sign up button was pressed');
-                print(_email);
                 _formKey.currentState.save();
-                NewUser user =
-                    NewUser(_firstname, _lastname, _email, _password);
-                registerUser(user);
-
-                // TODO: VALIDATE BEFORE MOVING TO NEXT SCREEN
-                // Navigator.pushReplacementNamed(context, '/my-courses');
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/my-courses', (route) => false);
+                User user = User("", "", _email, _password);
+                if (await loginUser(user)) {
+                  return Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/my-courses',
+                    (route) => false,
+                  );
+                }
+                print('Unable to Authenticate');
+                // TODO: VALIDATE FORM INPUTS
               },
               child: Text('Sign In'),
             ),
           ),
-          SizedBox(height: 40.0),
-          // SizedBox(height: 40.0),
 
+          SizedBox(height: 40.0),
           Text('Just getting started?'),
-          SizedBox(
-            height: 5.0,
-          ),
+          SizedBox(height: 5.0),
 
           GestureDetector(
             onTap: () {
