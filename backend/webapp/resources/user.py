@@ -61,16 +61,16 @@ class UserLogin(Resource):
         # Validate json body 
         fields = 'email', 'password'
         json_payload = request.get_json(silent=True)
-        if not validate_body(fields, json_payload): 
+        if not json_payload or not validate_body(fields, json_payload): 
             return {'error': f'Must specify: {fields}'}, 400
 
         # Get user 
         auth_user = User.find_by_email(json_payload['email']) 
         if not auth_user: 
-            return {'error': 'User does not exist'}
+            return {'error': 'User does not exist'}, 401
         # Verify password 
         if not auth_user.verify_password(json_payload['password']): 
-            return {'error': 'Incorrect password'}, 400
+            return {'error': 'Incorrect password'}, 401
         
         # Create token for user
 
