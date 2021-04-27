@@ -97,5 +97,10 @@ class UserRegister(Resource):
         new_user = User(**json_payload)
         new_user.save()
 
-        return {'data': {'msg': 'user was successfully created', 'user_id': f'{new_user.id}'}}
+        return {'data': {
+            'msg': 'user was successfully created', 
+            'user_id': f'{new_user.id}', 
+            'access_token': create_access_token(identity=new_user.id), 
+            'refresh_token': create_refresh_token(identity=new_user.id), 
+            }}
 
