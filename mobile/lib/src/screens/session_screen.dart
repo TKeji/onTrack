@@ -126,7 +126,7 @@ class _PomodoroTimerState extends State<PomodoroTimer> {
     return Column(
       children: [
         CircularPercentIndicator(
-          radius: 290.0,
+          radius: 250.0,
           lineWidth: 7.0,
           percent: percent_val,
           reverse: true,

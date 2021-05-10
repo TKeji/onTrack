@@ -8,6 +8,13 @@ from webapp.schemas import userSchema, usersSchema
 def validate_body(fields, json_body): 
     return all([field in json_body for field in fields])
 
+def validate_body_values(fields, json_body): 
+    print(json_body)
+    val_arr = [(json_body[field] is not None) for field in fields]
+    print(val_arr)
+    val =  all(val_arr)
+    return val 
+
 
 class UserResource(Resource): 
     def get(self, user_id): 
@@ -88,11 +95,14 @@ class UserRegister(Resource):
         # Validate json body 
         fields = 'email', 'password', 'firstname', 'lastname'
         json_payload = request.get_json(silent=True)
-        if not validate_body(fields, json_payload): 
+        print(json_payload)
+        if not json_payload or not validate_body(fields, json_payload): 
             return {'error': f'Must specify: {fields}'}, 400
+        if not validate_body_values(fields, json_payload): 
+            return {'error': f'Must specify values for {fields}'}, 400
         # Check if user with email already exists
         if User.find_by_email(json_payload['email']) is not None: 
-            return {'error': f'{json_payload["email"]} already exists'}, 400
+            return {'error': f'{json_payload["email"]} already exists'}, 401
         # Create user & save 
         new_user = User(**json_payload)
         new_user.save()
